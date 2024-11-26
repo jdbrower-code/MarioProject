@@ -2,17 +2,39 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Mario Bros");
+/////////////////////////////////////////////////Flags and Variable////////////////////////////////////////////////////////////////
+    sf::Vector2f dir = { 0.0f, 0.0f };
+    static constexpr float Speed = 0.005f;
+    sf::Vector2f Velocity = { 0.0f, 0.0f };
+    sf::Vector2f mario_Posistion;
+    float dt = (1.0f / 60.0f);
 
-    sf::Texture MarioSheet;
-    MarioSheet.loadFromFile("Textures\\PlayerSheet.png");
-    sf::Sprite Mario;
-    Mario.setTexture(MarioSheet);
-    Mario.setTextureRect(sf::IntRect(0, 0, 20, 16));
-    Mario.setScale(2.0f, 2.0f);
-    Mario.setPosition(0, 505);
-     
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//////////////////////////////////////////////////Create Window////////////////////////////////////////////////////////////////////
+
+    sf::RenderWindow window(sf::VideoMode(800, 600), "Mario Bros");     ///////////////////////////////////////////////////////////
+ 
+/////////////////////////////////////////////////Create Mario Sprite///////////////////////////////////////////////////////////////
+                                                                
+    //Create Texture                                                    ///////////////////////////////////////////////////////////
+    sf::Texture MarioSheet;                                             ///////////////////////////////////////////////////////////
+    //Load file into Texture                                            ///////////////////////////////////////////////////////////
+    MarioSheet.loadFromFile("Textures\\PlayerSheet.png");               ///////////////////////////////////////////////////////////
+    //Create Sprite                                                     ///////////////////////////////////////////////////////////
+    sf::Sprite Mario;                                                   ///////////////////////////////////////////////////////////
+    //Set Texture for Sprite                                            ///////////////////////////////////////////////////////////
+    Mario.setTexture(MarioSheet);                                       ///////////////////////////////////////////////////////////
+    //Mark Sprite location on texture                                   ///////////////////////////////////////////////////////////
+    Mario.setTextureRect(sf::IntRect(0, 0, 20, 16));                    ///////////////////////////////////////////////////////////
+    //Set Sprite Scale                                                  ///////////////////////////////////////////////////////////
+    Mario.setScale(2.0f, 2.0f);                                         ///////////////////////////////////////////////////////////
+    //Set Sprite Initial Location                                       ///////////////////////////////////////////////////////////
+    Mario.setPosition(0, 505);                                          ///////////////////////////////////////////////////////////
+                                                                        ///////////////////////////////////////////////////////////
+ //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////Game Loop/////////////////////////////////////////////////////////////////////////////
 
     while (window.isOpen())
     {
@@ -22,6 +44,31 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
+
+        //Handle Input
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        {
+            dir.x += 1.0f;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        {
+            dir.x -= 1.0f;
+        }
+
+        
+        
+        if (dir.x > 0)
+        {
+            
+            mario_Posistion.x += dir.x/dt;
+            Mario.setPosition(mario_Posistion.x, Mario.getPosition().y);
+        }
+        if (dir.x < 0)
+        {
+            mario_Posistion.x += dir.x/dt;
+            Mario.setPosition(mario_Posistion.x, Mario.getPosition().y);
+        }
+        
 
         window.clear();
         window.draw(Mario);
