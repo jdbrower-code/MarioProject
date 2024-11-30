@@ -1,4 +1,4 @@
-#include "..\Headers\Mario.h"
+#include "..\Headers\LvlOne.h"
 
 
 
@@ -9,7 +9,8 @@ int main()
 /////////////////////////////////////////////////Flags and Variable////////////////////////////////////////////////////////////////
 
     float dt = (1.0f / 60.0f);
-    sf::Vector2f StartingPosition = { 0, 505 };
+    sf::Vector2f PlayerStartingPosition = { 0, 505 };
+    sf::Vector2f BackgroundStartingPosition = { 0, -117 };
     sf::Vector2f dir = { 0.0f, 0.0f };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -22,7 +23,7 @@ int main()
                                                                 
 
  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Mario mario("Textures\\PlayerSheet.png", StartingPosition);
+    LvlOne One("Textures\\PlayerSheet.png", "Textures\\Mario Bros-World 1-1.png", PlayerStartingPosition, BackgroundStartingPosition);
 /////////////////////////////////////////////Game Loop/////////////////////////////////////////////////////////////////////////////
 
     while (window.isOpen())
@@ -46,30 +47,13 @@ int main()
             dir.x -= 1.0f;
         }
         
-            
-        
 
-        
-        
-        //if (dir.x > 0)
-        //{
-        //    
-        //    mario_Posistion.x += dir.x/dt;
-        //    Mario.setPosition(mario_Posistion.x, Mario.getPosition().y);
-        //}
-        //if (dir.x < 0)
-        //{
-        //    mario_Posistion.x += dir.x/dt;
-        //    Mario.setPosition(mario_Posistion.x, Mario.getPosition().y);
-        //}
-
-        mario.SetDirection(dir);
-        mario.Update(dt);
+        One.SetDirection(dir);
+        One.Update(dt);
         
 
         window.clear();
-        //window.draw(Mario);
-        mario.Draw(window);
+        One.Draw(window);
         window.display();
     }
 

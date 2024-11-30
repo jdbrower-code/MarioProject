@@ -139,11 +139,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
-    <ClCompile Include="src\Mario.cpp" />
+    <ClCompile Include="src\LvlOne.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Core.h" />
-    <ClInclude Include="Headers\Mario.h" />
+    <ClInclude Include="Headers\LvlOne.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
