@@ -14,7 +14,7 @@ public:
 
 private:
     
-    static constexpr float Speed = 0.05f;
+    static constexpr float Speed = 5.0f;
     sf::Vector2f Velocity = { 0.0f, 0.0f };
     sf::Vector2f m_MarioPosistion;
     //Create Texture                                                

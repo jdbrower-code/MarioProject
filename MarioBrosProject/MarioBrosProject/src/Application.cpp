@@ -34,6 +34,8 @@ int main()
                 window.close();
         }
 
+        dir.x = 0.0f;
+
         //Handle Input
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
@@ -43,10 +45,9 @@ int main()
         {
             dir.x -= 1.0f;
         }
-        else
-        {
-            dir.x = 0.0f;
-        }
+        
+            
+        
 
         
         

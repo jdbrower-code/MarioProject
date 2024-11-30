@@ -24,8 +24,25 @@ void Mario::SetDirection(sf::Vector2f& dir)
 
 void Mario::Update(float dt)
 {
-    m_MarioPosistion += Velocity * dt;
-    MarioSprite.setPosition(m_MarioPosistion);
+    
+    
+
+    if (MarioSprite.getPosition().x < 0)
+    {
+        MarioSprite.setPosition(0.0f, MarioSprite.getPosition().y);
+        m_MarioPosistion.x = 0.0; // Ensure the internal position is updated to avoid continuous flicker
+    }
+    else if (MarioSprite.getPosition().x > 768)
+    {
+        MarioSprite.setPosition(768.0f, MarioSprite.getPosition().y);
+        m_MarioPosistion.x = 768.0f;
+    }
+    else
+    {
+        m_MarioPosistion += Velocity * dt;
+        MarioSprite.setPosition(m_MarioPosistion);
+    }
+        
 }
 
 void Mario::Draw(sf::RenderTarget& rt) const
