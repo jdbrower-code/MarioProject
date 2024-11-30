@@ -39,9 +39,13 @@ int main()
         {
             dir.x += 1.0f;
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
             dir.x -= 1.0f;
+        }
+        else
+        {
+            dir.x = 0.0f;
         }
 
         
