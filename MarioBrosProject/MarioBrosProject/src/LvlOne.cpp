@@ -41,6 +41,25 @@ void LvlOne::Update(float dt)
         MarioSprite.setPosition(0.0f, MarioSprite.getPosition().y);
         m_MarioPosistion.x = 0.0; // Ensure the internal position is updated to avoid continuous flicker
     }
+    else if (MarioSprite.getPosition().x > 400.0f && BackGroundSprite.getPosition().x > -5952)
+    {
+        MarioSprite.setPosition(400.0f, MarioSprite.getPosition().y);
+        m_MarioPosistion.x = 400.0f;
+
+        if (BackGroundSprite.getPosition().x > 0)
+        {
+            BackGroundSprite.setPosition(0.0f, BackGroundSprite.getPosition().y);
+            m_BackGroundPosition.x = 0.0f;
+        }
+        else
+        {
+            m_BackGroundPosition -= Velocity * dt;
+            BackGroundSprite.setPosition(m_BackGroundPosition);
+        }
+
+
+        std::cout << BackGroundSprite.getPosition().x << std::endl;
+    }
     else if (MarioSprite.getPosition().x > 768)
     {
         MarioSprite.setPosition(768.0f, MarioSprite.getPosition().y);
