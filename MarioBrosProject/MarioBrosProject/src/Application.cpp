@@ -12,6 +12,7 @@ int main()
     sf::Vector2f PlayerStartingPosition = { 0, 505 };
     sf::Vector2f BackgroundStartingPosition = { 0, -117 };
     sf::Vector2f dir = { 0.0f, 0.0f };
+    int Pose = 0;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -25,6 +26,8 @@ int main()
  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     LvlOne One("Textures\\PlayerSheet.png", "Textures\\Mario Bros-World 1-1.png", PlayerStartingPosition, BackgroundStartingPosition);
 /////////////////////////////////////////////Game Loop/////////////////////////////////////////////////////////////////////////////
+
+
 
     while (window.isOpen())
     {
@@ -41,20 +44,31 @@ int main()
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
             dir.x += 1.0f;
+            if (Pose > 3)
+                Pose = 0;
+            else
+                Pose++;
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
             dir.x -= 1.0f;
+            if (Pose > 3)
+                Pose = 0;
+            else
+                Pose++;
         }
+        
         
 
         One.SetDirection(dir);
-        One.Update(dt);
+        One.Update(dt, Pose);
         
 
         window.clear();
-        One.Draw(window);
+        One.Draw(window, Pose);
         window.display();
+
+
     }
 
     return 0;

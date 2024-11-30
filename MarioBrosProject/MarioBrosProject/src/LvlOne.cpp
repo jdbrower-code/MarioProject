@@ -7,14 +7,15 @@ LvlOne::LvlOne(std::string Player_FilePath, std::string BackgroundFilePath, sf::
     //Player Creation
         //Load file into Texture                                        
         MarioSheet.loadFromFile(Player_FilePath);
-        //Set Texture for Sprite                                        
-        MarioSprite.setTexture(MarioSheet);
-        //Mark Sprite location on texture                               
-        MarioSprite.setTextureRect(sf::IntRect(0, 0, 20, 16));
-        //Set Sprite Scale                                              
-        MarioSprite.setScale(2.0f, 2.0f);
-        //Set Sprite Initial Location                                   
-        MarioSprite.setPosition(m_MarioPosistion);
+        for (int i = 0; i < 6; i++)
+        {
+            MarioSprite.setTexture(MarioSheet);
+            MarioSprite.setTextureRect(sf::IntRect(i * FrameWidth, 0, FrameWidth, FrameHeight));
+            MarioSprite.setScale(2.0f, 2.0f);
+            WalkingAnimation.push_back(MarioSprite);
+            WalkingAnimation[i].setPosition(m_MarioPosistion);
+        }
+
     //Background Creation
         //Load file into Texture
         BackGroundSheet.loadFromFile(BackgroundFilePath);
@@ -31,19 +32,19 @@ void LvlOne::SetDirection(sf::Vector2f& dir)
     Velocity = Speed * dir;
 }
 
-void LvlOne::Update(float dt)
+void LvlOne::Update(float dt, int Pose)
 {
     
     
 
-    if (MarioSprite.getPosition().x < 0)
+    if (WalkingAnimation[Pose].getPosition().x < 0)
     {
-        MarioSprite.setPosition(0.0f, MarioSprite.getPosition().y);
+        WalkingAnimation[Pose].setPosition(0.0f, WalkingAnimation[Pose].getPosition().y);
         m_MarioPosistion.x = 0.0; // Ensure the internal position is updated to avoid continuous flicker
     }
-    else if (MarioSprite.getPosition().x > 400.0f && BackGroundSprite.getPosition().x > -5952)
+    else if (WalkingAnimation[Pose].getPosition().x > 400.0f && BackGroundSprite.getPosition().x > -5952)
     {
-        MarioSprite.setPosition(400.0f, MarioSprite.getPosition().y);
+        WalkingAnimation[Pose].setPosition(400.0f, WalkingAnimation[Pose].getPosition().y);
         m_MarioPosistion.x = 400.0f;
 
         if (BackGroundSprite.getPosition().x > 0)
@@ -53,28 +54,38 @@ void LvlOne::Update(float dt)
         }
         else
         {
-            m_BackGroundPosition -= Velocity * dt;
+            m_BackGroundPosition -= (Velocity * 1.5f) * dt;
             BackGroundSprite.setPosition(m_BackGroundPosition);
         }
 
 
-        std::cout << BackGroundSprite.getPosition().x << std::endl;
+        std::cout << WalkingAnimation[Pose].getPosition().x << std::endl;
     }
-    else if (MarioSprite.getPosition().x > 768)
+    else if (WalkingAnimation[Pose].getPosition().x > 575.0f)
     {
-        MarioSprite.setPosition(768.0f, MarioSprite.getPosition().y);
-        m_MarioPosistion.x = 768.0f;
+        WalkingAnimation[Pose].setPosition(575.0f, WalkingAnimation[Pose].getPosition().y);
+        m_MarioPosistion.x = 575.0f;
+
     }
     else
     {
+        
+        WalkingAnimation[Pose].setPosition(m_MarioPosistion);
         m_MarioPosistion += Velocity * dt;
-        MarioSprite.setPosition(m_MarioPosistion);
     }
         
 }
 
-void LvlOne::Draw(sf::RenderTarget& rt) const
+void LvlOne::Draw(sf::RenderTarget& rt, int Pose) const
+    {
+
+    if (WalkingAnimation[Pose].getPosition().x < 575)
     {
         rt.draw(BackGroundSprite);
-        rt.draw(MarioSprite);
+        rt.draw(WalkingAnimation[Pose]);
+    }
+    else
+        rt.draw(BackGroundSprite);
+
+
     }
