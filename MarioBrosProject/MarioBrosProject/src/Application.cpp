@@ -10,6 +10,7 @@ int main()
 
     float dt = (1.0f / 60.0f);
     sf::Vector2f StartingPosition = { 0, 505 };
+    sf::Vector2f dir = { 0.0f, 0.0f };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -34,14 +35,14 @@ int main()
         }
 
         //Handle Input
-        //if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-        //{
-        //    dir.x += 1.0f;
-        //}
-        //if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-        //{
-        //    dir.x -= 1.0f;
-        //}
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        {
+            dir.x += 1.0f;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        {
+            dir.x -= 1.0f;
+        }
 
         
         
@@ -56,6 +57,9 @@ int main()
         //    mario_Posistion.x += dir.x/dt;
         //    Mario.setPosition(mario_Posistion.x, Mario.getPosition().y);
         //}
+
+        mario.SetDirection(dir);
+        mario.Update(dt);
         
 
         window.clear();

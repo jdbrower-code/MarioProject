@@ -17,6 +17,17 @@ Mario::Mario(std::string FilePath, sf::Vector2f& Pos)
     MarioSprite.setPosition(m_MarioPosistion);
 }
 
+void Mario::SetDirection(sf::Vector2f& dir)
+{
+    Velocity = Speed * dir;
+}
+
+void Mario::Update(float dt)
+{
+    m_MarioPosistion += Velocity * dt;
+    MarioSprite.setPosition(m_MarioPosistion);
+}
+
 void Mario::Draw(sf::RenderTarget& rt) const
     {
         rt.draw(MarioSprite);
