@@ -7,19 +7,20 @@
 int main()
 {
 /////////////////////////////////////////////////Flags and Variable////////////////////////////////////////////////////////////////
-
-    float dt = (1.0f / 60.0f);
+    sf::Clock dt_time;
+    
     sf::Vector2f PlayerStartingPosition = { 0, 505 };
     sf::Vector2f BackgroundStartingPosition = { 0, -117 };
     sf::Vector2f dir = { 0.0f, 0.0f };
     int Pose = 0;
-
+    bool Moving = false;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////Create Window////////////////////////////////////////////////////////////////////
 
     sf::RenderWindow window(sf::VideoMode(800, 600), "Mario Bros");     ///////////////////////////////////////////////////////////
  
+    window.setFramerateLimit(120);
 /////////////////////////////////////////////////Create Mario Sprite///////////////////////////////////////////////////////////////
                                                                 
 
@@ -31,6 +32,8 @@ int main()
 
     while (window.isOpen())
     {
+        float dt = dt_time.restart().asSeconds();
+
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -44,28 +47,29 @@ int main()
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
             dir.x += 1.0f;
-            if (Pose > 3)
-                Pose = 0;
-            else
-                Pose++;
+            Moving = true;
+;
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
             dir.x -= 1.0f;
-            if (Pose > 3)
-                Pose = 0;
-            else
-                Pose++;
+            Moving = true;
+
+        }
+        else
+        {
+            dir.x = 0.0;
+            Moving = false;
         }
         
         
 
         One.SetDirection(dir);
-        One.Update(dt, Pose);
+        One.Update(dt, Moving);
         
 
         window.clear();
-        One.Draw(window, Pose);
+        One.Draw(window);
         window.display();
 
 

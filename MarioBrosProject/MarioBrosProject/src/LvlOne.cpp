@@ -32,21 +32,36 @@ void LvlOne::SetDirection(sf::Vector2f& dir)
     Velocity = Speed * dir;
 }
 
-void LvlOne::Update(float dt, int Pose)
+void LvlOne::Update(float dt, bool Moving)
 {
-    
-    
-
-    if (WalkingAnimation[Pose].getPosition().x < 0)
+    // Animation logic inside the game loop
+    if(Moving)
     {
-        WalkingAnimation[Pose].setPosition(0.0f, WalkingAnimation[Pose].getPosition().y);
-        m_MarioPosistion.x = 0.0; // Ensure the internal position is updated to avoid continuous flicker
+        if (animationClock.getElapsedTime().asSeconds() > frameDelay)
+        {
+            currentFrame = (currentFrame + 1) % 4; // Cycle through frames 0 to 3
+            MarioSprite = WalkingAnimation[currentFrame]; // Update sprite
+            animationClock.restart(); // Reset the clock
+        }
     }
-    else if (WalkingAnimation[Pose].getPosition().x > 400.0f && BackGroundSprite.getPosition().x > -5952)
+    else
     {
-        WalkingAnimation[Pose].setPosition(400.0f, WalkingAnimation[Pose].getPosition().y);
-        m_MarioPosistion.x = 400.0f;
+        MarioSprite = WalkingAnimation[0];
+    }
 
+    
+    std::cout << "Clock: " << animationClock.getElapsedTime().asSeconds() << std::endl;
+    std::cout << "Frame Delay: " << frameDelay << std::endl;
+
+    if (MarioSprite.getPosition().x < 0)
+    {
+        MarioSprite.setPosition(0, MarioSprite.getPosition().y);
+        m_MarioPosistion.x = 0.0;
+    }
+    else if (MarioSprite.getPosition().x > 400.0f && BackGroundSprite.getPosition().x > -5952)
+    {
+        MarioSprite.setPosition(400, MarioSprite.getPosition().y);
+        m_MarioPosistion.x = 400;
         if (BackGroundSprite.getPosition().x > 0)
         {
             BackGroundSprite.setPosition(0.0f, BackGroundSprite.getPosition().y);
@@ -54,38 +69,72 @@ void LvlOne::Update(float dt, int Pose)
         }
         else
         {
-            m_BackGroundPosition -= (Velocity * 1.5f) * dt;
+            m_BackGroundPosition -= (Velocity * 3.5f) * dt;
             BackGroundSprite.setPosition(m_BackGroundPosition);
         }
-
-
-        std::cout << WalkingAnimation[Pose].getPosition().x << std::endl;
     }
-    else if (WalkingAnimation[Pose].getPosition().x > 575.0f)
+    else if (MarioSprite.getPosition().x > 575.0f)
     {
-        WalkingAnimation[Pose].setPosition(575.0f, WalkingAnimation[Pose].getPosition().y);
+        MarioSprite.setPosition(575.0f, MarioSprite.getPosition().y);
         m_MarioPosistion.x = 575.0f;
-
+    
     }
     else
     {
         
-        WalkingAnimation[Pose].setPosition(m_MarioPosistion);
+        MarioSprite.setPosition(m_MarioPosistion);
         m_MarioPosistion += Velocity * dt;
     }
+
+    //if (WalkingAnimation[Pose].getPosition().x < 0)
+    //{
+    //    WalkingAnimation[Pose].setPosition(0.0f, WalkingAnimation[Pose].getPosition().y);
+    //    m_MarioPosistion.x = 0.0; // Ensure the internal position is updated to avoid continuous flicker
+    //}
+    //else if (WalkingAnimation[Pose].getPosition().x > 400.0f && BackGroundSprite.getPosition().x > -5952)
+    //{
+    //    WalkingAnimation[Pose].setPosition(400.0f, WalkingAnimation[Pose].getPosition().y);
+    //    m_MarioPosistion.x = 400.0f;
+
+    //    if (BackGroundSprite.getPosition().x > 0)
+    //    {
+    //        BackGroundSprite.setPosition(0.0f, BackGroundSprite.getPosition().y);
+    //        m_BackGroundPosition.x = 0.0f;
+    //    }
+    //    else
+    //    {
+    //        m_BackGroundPosition -= (Velocity * 1.5f) * dt;
+    //        BackGroundSprite.setPosition(m_BackGroundPosition);
+    //    }
+
+
+    //    std::cout << WalkingAnimation[Pose].getPosition().x << std::endl;
+    //}
+    //else if (WalkingAnimation[Pose].getPosition().x > 575.0f)
+    //{
+    //    WalkingAnimation[Pose].setPosition(575.0f, WalkingAnimation[Pose].getPosition().y);
+    //    m_MarioPosistion.x = 575.0f;
+
+    //}
+    //else
+    //{
+    //    
+    //    WalkingAnimation[Pose].setPosition(m_MarioPosistion);
+    //    m_MarioPosistion += Velocity * dt;
+    //}
         
 }
 
-void LvlOne::Draw(sf::RenderTarget& rt, int Pose) const
-    {
+void LvlOne::Draw(sf::RenderTarget& rt) const
+{
 
-    if (WalkingAnimation[Pose].getPosition().x < 575)
+    if (MarioSprite.getPosition().x < 575)
     {
         rt.draw(BackGroundSprite);
-        rt.draw(WalkingAnimation[Pose]);
+        rt.draw(MarioSprite);
     }
     else
         rt.draw(BackGroundSprite);
 
 
-    }
+}

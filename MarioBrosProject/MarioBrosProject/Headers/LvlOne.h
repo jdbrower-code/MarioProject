@@ -8,15 +8,15 @@ public:
 
     void SetDirection(sf::Vector2f& dir);
 
-    void Update(float dt, int Pose);
+    void Update(float dt, bool Moving);
 
-    void Draw(sf::RenderTarget& rt, int Pose) const;
+    void Draw(sf::RenderTarget& rt) const;
 
 private:
     int FrameWidth = 20;
     int FrameHeight = 16;
 
-    static constexpr float Speed = 5.0f;
+    static constexpr float Speed = 300.0f;
     sf::Vector2f Velocity = { 0.0f, 0.0f };
     sf::Vector2f m_MarioPosistion;
     sf::Vector2f m_BackGroundPosition;
@@ -30,4 +30,7 @@ private:
 
     sf::Sprite BackGroundSprite;
 
+    sf::Clock animationClock; // Clock to control frame updates
+    float frameDelay = 0.08f; // Delay between frames in seconds
+    int currentFrame = 0; // Current frame index
 };
