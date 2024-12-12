@@ -32,8 +32,11 @@ void LvlOne::SetDirection(sf::Vector2f& dir)
     Velocity = Speed * dir;
 }
 
-void LvlOne::Update(float dt, bool Moving)
+void LvlOne::Update(float dt, bool Moving, bool inverted)
 {
+
+    LvlOne::ConstrainPosition();
+
     // Animation logic inside the game loop
     if(Moving)
     {
@@ -41,6 +44,7 @@ void LvlOne::Update(float dt, bool Moving)
         {
             currentFrame = (currentFrame + 1) % 4; // Cycle through frames 0 to 3
             MarioSprite = WalkingAnimation[currentFrame]; // Update sprite
+            LvlOne::InvertSprite(inverted);
             animationClock.restart(); // Reset the clock
         }
     }
@@ -50,15 +54,9 @@ void LvlOne::Update(float dt, bool Moving)
     }
 
     
-    std::cout << "Clock: " << animationClock.getElapsedTime().asSeconds() << std::endl;
-    std::cout << "Frame Delay: " << frameDelay << std::endl;
+    std::cout << MarioSprite.getPosition().x << std::endl;
 
-    if (MarioSprite.getPosition().x < 0)
-    {
-        MarioSprite.setPosition(0, MarioSprite.getPosition().y);
-        m_MarioPosistion.x = 0.0;
-    }
-    else if (MarioSprite.getPosition().x > 400.0f && BackGroundSprite.getPosition().x > -5952)
+    if (MarioSprite.getPosition().x > 400.0f && BackGroundSprite.getPosition().x > -5952)
     {
         MarioSprite.setPosition(400, MarioSprite.getPosition().y);
         m_MarioPosistion.x = 400;
@@ -73,12 +71,6 @@ void LvlOne::Update(float dt, bool Moving)
             BackGroundSprite.setPosition(m_BackGroundPosition);
         }
     }
-    else if (MarioSprite.getPosition().x > 575.0f)
-    {
-        MarioSprite.setPosition(575.0f, MarioSprite.getPosition().y);
-        m_MarioPosistion.x = 575.0f;
-    
-    }
     else
     {
         
@@ -86,42 +78,6 @@ void LvlOne::Update(float dt, bool Moving)
         m_MarioPosistion += Velocity * dt;
     }
 
-    //if (WalkingAnimation[Pose].getPosition().x < 0)
-    //{
-    //    WalkingAnimation[Pose].setPosition(0.0f, WalkingAnimation[Pose].getPosition().y);
-    //    m_MarioPosistion.x = 0.0; // Ensure the internal position is updated to avoid continuous flicker
-    //}
-    //else if (WalkingAnimation[Pose].getPosition().x > 400.0f && BackGroundSprite.getPosition().x > -5952)
-    //{
-    //    WalkingAnimation[Pose].setPosition(400.0f, WalkingAnimation[Pose].getPosition().y);
-    //    m_MarioPosistion.x = 400.0f;
-
-    //    if (BackGroundSprite.getPosition().x > 0)
-    //    {
-    //        BackGroundSprite.setPosition(0.0f, BackGroundSprite.getPosition().y);
-    //        m_BackGroundPosition.x = 0.0f;
-    //    }
-    //    else
-    //    {
-    //        m_BackGroundPosition -= (Velocity * 1.5f) * dt;
-    //        BackGroundSprite.setPosition(m_BackGroundPosition);
-    //    }
-
-
-    //    std::cout << WalkingAnimation[Pose].getPosition().x << std::endl;
-    //}
-    //else if (WalkingAnimation[Pose].getPosition().x > 575.0f)
-    //{
-    //    WalkingAnimation[Pose].setPosition(575.0f, WalkingAnimation[Pose].getPosition().y);
-    //    m_MarioPosistion.x = 575.0f;
-
-    //}
-    //else
-    //{
-    //    
-    //    WalkingAnimation[Pose].setPosition(m_MarioPosistion);
-    //    m_MarioPosistion += Velocity * dt;
-    //}
         
 }
 
@@ -137,4 +93,27 @@ void LvlOne::Draw(sf::RenderTarget& rt) const
         rt.draw(BackGroundSprite);
 
 
+}
+
+void LvlOne::InvertSprite(bool a)
+{
+    float scale = a ? 2.0f : -2.0f;
+
+    // Adjust origin for proper flipping
+    if (scale < 0)
+        MarioSprite.setOrigin(FrameWidth, 0); // Set origin to the right edge when inverted
+    else
+        MarioSprite.setOrigin(0, 0); // Default origin for normal direction
+
+    MarioSprite.setScale(scale, 2.0f);
+}
+
+void LvlOne::ConstrainPosition()
+{
+    if (m_MarioPosistion.x < 0)
+        m_MarioPosistion.x = 0.0f;
+    else if (m_MarioPosistion.x > 575.0f)
+        m_MarioPosistion.x = 575.0f;
+
+    MarioSprite.setPosition(m_MarioPosistion);
 }

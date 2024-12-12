@@ -12,15 +12,17 @@ int main()
     sf::Vector2f PlayerStartingPosition = { 0, 505 };
     sf::Vector2f BackgroundStartingPosition = { 0, -117 };
     sf::Vector2f dir = { 0.0f, 0.0f };
-    int Pose = 0;
+    //int Pose = 0;
     bool Moving = false;
+
+    bool inverted = true; // Direction flag
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////Create Window////////////////////////////////////////////////////////////////////
 
     sf::RenderWindow window(sf::VideoMode(800, 600), "Mario Bros");     ///////////////////////////////////////////////////////////
  
-    window.setFramerateLimit(120);
+    window.setFramerateLimit(240);
 /////////////////////////////////////////////////Create Mario Sprite///////////////////////////////////////////////////////////////
                                                                 
 
@@ -46,14 +48,19 @@ int main()
         //Handle Input
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
+            inverted = true;
             dir.x += 1.0f;
             Moving = true;
+            
+
 ;
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
+            inverted = false;
             dir.x -= 1.0f;
             Moving = true;
+            ;
 
         }
         else
@@ -65,7 +72,7 @@ int main()
         
 
         One.SetDirection(dir);
-        One.Update(dt, Moving);
+        One.Update(dt, Moving, inverted);
         
 
         window.clear();

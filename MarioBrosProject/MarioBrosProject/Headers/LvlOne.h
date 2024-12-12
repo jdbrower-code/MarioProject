@@ -8,9 +8,14 @@ public:
 
     void SetDirection(sf::Vector2f& dir);
 
-    void Update(float dt, bool Moving);
+    void Update(float dt, bool Moving, bool inverted);
 
     void Draw(sf::RenderTarget& rt) const;
+
+    void InvertSprite(bool a);
+
+    void ConstrainPosition();
+
 
 private:
     int FrameWidth = 20;
