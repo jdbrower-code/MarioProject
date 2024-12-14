@@ -41,7 +41,7 @@ void LvlOne::Update(float dt, bool Moving, bool inverted)
     if (isJumping)
     {
         // Increase jump progress over time
-        jumpProgress += dt * 700.0f; // Jump speed, you can adjust it
+        jumpProgress += dt * 900.0f; // Jump speed, you can adjust it
 
         // Move the sprite up and then back down
         if (jumpProgress <= 300.0f)
@@ -52,7 +52,7 @@ void LvlOne::Update(float dt, bool Moving, bool inverted)
         else if (jumpProgress <= 2000.0f && MarioSprite.getPosition().y < 505)
         {
             // Descend back to original position
-            m_MarioPosistion.y += 500.0f * dt; // Move down 10 pixels (adjust if needed)
+            m_MarioPosistion.y += 350.0f * dt; // Move down 10 pixels (adjust if needed)
         }
         else
         {

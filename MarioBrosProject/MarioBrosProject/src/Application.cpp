@@ -43,6 +43,8 @@ int main()
                 window.close();
         }
 
+
+
         dir.x = 0.0f;
 
         //Handle Input
@@ -83,6 +85,8 @@ int main()
         One.Draw(window);
         window.display();
 
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+            window.close();
 
     }
 
