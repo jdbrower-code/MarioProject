@@ -37,6 +37,31 @@ void LvlOne::Update(float dt, bool Moving, bool inverted)
 
     LvlOne::ConstrainPosition();
 
+    // Jump logic
+    if (isJumping)
+    {
+        // Increase jump progress over time
+        jumpProgress += dt * 700.0f; // Jump speed, you can adjust it
+
+        // Move the sprite up and then back down
+        if (jumpProgress <= 300.0f)
+        {
+            // Ascend
+            m_MarioPosistion.y -= 500.0f * dt; // Move up 10 pixels (adjust if needed)
+        }
+        else if (jumpProgress <= 2000.0f && MarioSprite.getPosition().y < 505)
+        {
+            // Descend back to original position
+            m_MarioPosistion.y += 500.0f * dt; // Move down 10 pixels (adjust if needed)
+        }
+        else
+        {
+            // End of the jump, reset
+            isJumping = false;
+            jumpProgress = 0.0f;
+        }
+    }
+
     // Animation logic inside the game loop
     if(Moving)
     {
@@ -54,7 +79,7 @@ void LvlOne::Update(float dt, bool Moving, bool inverted)
     }
 
     
-    std::cout << MarioSprite.getPosition().x << std::endl;
+    std::cout << MarioSprite.getPosition().y << std::endl;
 
     if (MarioSprite.getPosition().x > 400.0f && BackGroundSprite.getPosition().x > -5952)
     {
@@ -75,7 +100,7 @@ void LvlOne::Update(float dt, bool Moving, bool inverted)
     {
         
         MarioSprite.setPosition(m_MarioPosistion);
-        m_MarioPosistion += Velocity * dt;
+        m_MarioPosistion.x += Velocity.x * dt;
     }
 
         
@@ -116,4 +141,15 @@ void LvlOne::ConstrainPosition()
         m_MarioPosistion.x = 575.0f;
 
     MarioSprite.setPosition(m_MarioPosistion);
+}
+
+
+// New method to trigger the jump
+void LvlOne::Jump()
+{
+    if (!isJumping)
+    {
+        isJumping = true;
+        jumpProgress = 0.0f;
+    }
 }

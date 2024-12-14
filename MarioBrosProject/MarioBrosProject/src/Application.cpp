@@ -69,6 +69,10 @@ int main()
             Moving = false;
         }
         
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+        {
+            One.Jump();
+        }
         
 
         One.SetDirection(dir);

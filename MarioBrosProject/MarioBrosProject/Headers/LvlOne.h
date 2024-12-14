@@ -16,6 +16,8 @@ public:
 
     void ConstrainPosition();
 
+    void Jump();
+
 
 private:
     int FrameWidth = 20;
@@ -38,4 +40,9 @@ private:
     sf::Clock animationClock; // Clock to control frame updates
     float frameDelay = 0.08f; // Delay between frames in seconds
     int currentFrame = 0; // Current frame index
+
+    float initialYPos = 0.0f;
+    bool isJumping = false;
+    float jumpProgress = 0.0f; // Current jump height
+    static constexpr float gravity = 0.3f; // Gravity constant
 };
