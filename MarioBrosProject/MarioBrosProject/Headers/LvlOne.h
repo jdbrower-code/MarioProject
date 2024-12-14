@@ -44,5 +44,10 @@ private:
     float initialYPos = 0.0f;
     bool isJumping = false;
     float jumpProgress = 0.0f; // Current jump height
-    static constexpr float gravity = 0.3f; // Gravity constant
+    //static constexpr float gravity = 0.3f; // Gravity constant
+
+    const float gravity = 900.0f; // Acceleration due to gravity (pixels per second^2)
+    const float initialJumpVelocity = -500.0f; // Initial upward velocity (negative for upward motion)
+    float verticalVelocity = 0.0f; // Current vertical velocity
+    const float groundLevel = 505.0f; // Y-position of the ground
 };

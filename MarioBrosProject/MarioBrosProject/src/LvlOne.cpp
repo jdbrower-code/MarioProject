@@ -40,25 +40,18 @@ void LvlOne::Update(float dt, bool Moving, bool inverted)
     // Jump logic
     if (isJumping)
     {
-        // Increase jump progress over time
-        jumpProgress += dt * 900.0f; // Jump speed, you can adjust it
+        // Apply vertical velocity to Mario's position
+        m_MarioPosistion.y += verticalVelocity * dt;
 
-        // Move the sprite up and then back down
-        if (jumpProgress <= 300.0f)
+        // Apply gravity to the vertical velocity
+        verticalVelocity += gravity * dt;
+
+        // Check if Mario has landed (or reached the ground)
+        if (m_MarioPosistion.y >= groundLevel)
         {
-            // Ascend
-            m_MarioPosistion.y -= 500.0f * dt; // Move up 10 pixels (adjust if needed)
-        }
-        else if (jumpProgress <= 2000.0f && MarioSprite.getPosition().y < 505)
-        {
-            // Descend back to original position
-            m_MarioPosistion.y += 350.0f * dt; // Move down 10 pixels (adjust if needed)
-        }
-        else
-        {
-            // End of the jump, reset
-            isJumping = false;
-            jumpProgress = 0.0f;
+            m_MarioPosistion.y = groundLevel; // Snap to ground
+            isJumping = false;                // End the jump
+            verticalVelocity = 0.0f;          // Reset velocity
         }
     }
 
@@ -150,6 +143,6 @@ void LvlOne::Jump()
     if (!isJumping)
     {
         isJumping = true;
-        jumpProgress = 0.0f;
+        verticalVelocity = initialJumpVelocity; // Set initial upward velocity
     }
 }
