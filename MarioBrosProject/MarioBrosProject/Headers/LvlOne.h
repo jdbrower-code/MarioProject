@@ -23,7 +23,7 @@ private:
     int FrameWidth = 20;
     int FrameHeight = 16;
 
-    static constexpr float Speed = 300.0f;
+    static constexpr float Speed = 250.0f;
     sf::Vector2f Velocity = { 0.0f, 0.0f };
     sf::Vector2f m_MarioPosistion;
     sf::Vector2f m_BackGroundPosition;
@@ -43,11 +43,11 @@ private:
 
     float initialYPos = 0.0f;
     bool isJumping = false;
-    float jumpProgress = 0.0f; // Current jump height
+   // float jumpProgress = 0.0f; // Current jump height
     //static constexpr float gravity = 0.3f; // Gravity constant
 
-    const float gravity = 900.0f; // Acceleration due to gravity (pixels per second^2)
-    const float initialJumpVelocity = -500.0f; // Initial upward velocity (negative for upward motion)
+    const float gravity = 700.0f; // Acceleration due to gravity (pixels per second^2)
+    const float initialJumpVelocity = -550.0f; // Initial upward velocity (negative for upward motion)
     float verticalVelocity = 0.0f; // Current vertical velocity
     const float groundLevel = 505.0f; // Y-position of the ground
 };

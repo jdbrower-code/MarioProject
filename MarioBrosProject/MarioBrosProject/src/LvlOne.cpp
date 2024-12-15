@@ -97,7 +97,7 @@ void LvlOne::Update(float dt, bool Moving, bool inverted)
         }
         else
         {
-            m_BackGroundPosition -= (Velocity * 3.5f) * dt;
+            m_BackGroundPosition -= (Velocity * 2.5f) * dt;
             BackGroundSprite.setPosition(m_BackGroundPosition);
         }
     }
