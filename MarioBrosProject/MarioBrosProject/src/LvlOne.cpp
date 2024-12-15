@@ -40,11 +40,15 @@ void LvlOne::Update(float dt, bool Moving, bool inverted)
     // Jump logic
     if (isJumping)
     {
+        
         // Apply vertical velocity to Mario's position
         m_MarioPosistion.y += verticalVelocity * dt;
 
         // Apply gravity to the vertical velocity
         verticalVelocity += gravity * dt;
+
+        
+        
 
         // Check if Mario has landed (or reached the ground)
         if (m_MarioPosistion.y >= groundLevel)
@@ -52,6 +56,7 @@ void LvlOne::Update(float dt, bool Moving, bool inverted)
             m_MarioPosistion.y = groundLevel; // Snap to ground
             isJumping = false;                // End the jump
             verticalVelocity = 0.0f;          // Reset velocity
+            
         }
     }
 
@@ -64,6 +69,13 @@ void LvlOne::Update(float dt, bool Moving, bool inverted)
             MarioSprite = WalkingAnimation[currentFrame]; // Update sprite
             LvlOne::InvertSprite(inverted);
             animationClock.restart(); // Reset the clock
+
+            if (isJumping)
+            {
+                MarioSprite = WalkingAnimation[5];
+                LvlOne::InvertSprite(inverted);
+            }
+                
         }
     }
     else

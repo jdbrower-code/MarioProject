@@ -62,7 +62,7 @@ int main()
             inverted = false;
             dir.x -= 1.0f;
             Moving = true;
-            ;
+            
 
         }
         else
