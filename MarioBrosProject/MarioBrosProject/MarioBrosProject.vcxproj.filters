@@ -21,12 +21,18 @@
     <ClCompile Include="src\LvlOne.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\LvlOne.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\Core.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

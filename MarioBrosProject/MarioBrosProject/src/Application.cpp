@@ -1,4 +1,5 @@
 #include "..\Headers\LvlOne.h"
+#include "..\Headers\Player.h"
 
 
 
@@ -27,7 +28,8 @@ int main()
                                                                 
 
  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    LvlOne One("Textures\\PlayerSheet.png", "Textures\\Mario Bros-World 1-1.png", PlayerStartingPosition, BackgroundStartingPosition);
+    LvlOne One("Textures\\Mario Bros-World 1-1.png", BackgroundStartingPosition);
+    Player Mario("Textures\\PlayerSheet.png", PlayerStartingPosition);
 /////////////////////////////////////////////Game Loop/////////////////////////////////////////////////////////////////////////////
 
 
@@ -73,16 +75,19 @@ int main()
         
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
         {
-            One.Jump();
+            Mario.Jump();
         }
         
 
         One.SetDirection(dir);
-        One.Update(dt, Moving, inverted);
+        Mario.SetDirection(dir);
+        
+        Mario.Update(dt, Moving, inverted, One);
         
 
         window.clear();
         One.Draw(window);
+        Mario.Draw(window);
         window.display();
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))

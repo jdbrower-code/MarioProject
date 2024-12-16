@@ -4,50 +4,40 @@
 class LvlOne
 {
 public:
-    LvlOne(std::string Player_FilePath, std::string BackgroundFilePath, sf::Vector2f& PlayerPos, sf::Vector2f& BackgrounPos);
+    LvlOne(std::string BackgroundFilePath, sf::Vector2f& BackgrounPos);
 
     void SetDirection(sf::Vector2f& dir);
 
-    void Update(float dt, bool Moving, bool inverted);
+    void Update(float dt);
 
     void Draw(sf::RenderTarget& rt) const;
 
-    void InvertSprite(bool a);
+    sf::Sprite GetBackground();
 
-    void ConstrainPosition();
+    sf::Sprite SetBackground(float a, float b);
 
-    void Jump();
+    sf::Vector2f Set_m_BackgroundPosition(float x, float y);
 
 
 private:
-    int FrameWidth = 20;
-    int FrameHeight = 16;
+
 
     static constexpr float Speed = 250.0f;
     sf::Vector2f Velocity = { 0.0f, 0.0f };
-    sf::Vector2f m_MarioPosistion;
+;
     sf::Vector2f m_BackGroundPosition;
     //Create Texture                                                
-    sf::Texture MarioSheet;
+
     sf::Texture BackGroundSheet;
 
 
-    sf::Sprite MarioSprite;
-    std::vector<sf::Sprite> WalkingAnimation;
+
 
     sf::Sprite BackGroundSprite;
 
-    sf::Clock animationClock; // Clock to control frame updates
-    float frameDelay = 0.08f; // Delay between frames in seconds
-    int currentFrame = 0; // Current frame index
 
-    float initialYPos = 0.0f;
-    bool isJumping = false;
    // float jumpProgress = 0.0f; // Current jump height
     //static constexpr float gravity = 0.3f; // Gravity constant
 
-    const float gravity = 700.0f; // Acceleration due to gravity (pixels per second^2)
-    const float initialJumpVelocity = -550.0f; // Initial upward velocity (negative for upward motion)
-    float verticalVelocity = 0.0f; // Current vertical velocity
-    const float groundLevel = 505.0f; // Y-position of the ground
+
 };
